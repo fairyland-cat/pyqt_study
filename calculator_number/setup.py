@@ -47,8 +47,6 @@ class CalculatorMainWindow():
         sys.exit(app.exec_())
 
     def calculator(self, text):
-        # 标识当此运算是否结束
-        is_finish = False
         # 清除所有痕迹
         if text == "C":
             self.ui.label.setText("")
