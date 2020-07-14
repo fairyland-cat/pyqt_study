@@ -9,19 +9,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>833</width>
-    <height>506</height>
+    <width>489</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>计算器</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>110</y>
+      <x>40</x>
+      <y>20</y>
       <width>411</width>
       <height>231</height>
      </rect>
@@ -70,7 +70,7 @@ border-top:0px;
 border-style: solid;</string>
          </property>
          <property name="text">
-          <string>7</string>
+          <string>0</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -443,7 +443,7 @@ border-style: solid;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>833</width>
+     <width>489</width>
      <height>21</height>
     </rect>
    </property>

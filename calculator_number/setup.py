@@ -47,48 +47,111 @@ class CalculatorMainWindow():
         sys.exit(app.exec_())
 
     def calculator(self, text):
+        # 标识当此运算是否结束
+        is_finish = False
+        # 清除所有痕迹
         if text == "C":
             self.ui.label.setText("")
             self.ui.label_2.setText("")
+            self.left_number = ""
+            self.operator_type = ""
+            self.right_number = ""
             return
+        # 清除当前输入的数
+        if text == "CE":
+            self.ui.label_2.setText("0")
+            if self.operator_type:
+                self.right_number = ""
+            else:
+                self.left_number = ""
+            return
+        # 回退删除一位数
+        if text == "Backspace":
+            if self.operator_type:
+                input_list = list(self.right_number)
+                if input_list:
+                    input_list.pop()
+                    self.right_number = "".join(input_list)
+            else:
+                input_list = list(self.left_number)
+                if input_list:
+                    input_list.pop()
+                    self.left_number = "".join(input_list)
+            surplus = "".join(input_list) if input_list else "0"
+            self.ui.label_2.setText(surplus)
+            return
+        # 计算逻辑
         if not self.left_number:
             if text.isdigit():
+                self.ui.label.setText("")
                 self.left_number += text
                 return self.ui.label_2.setText(self.left_number)
-            if text in ("+", "-", "*", "/"):
+            else:
                 return
         if not self.operator_type:
-            if text.isdigit():
+            if text.isdigit() or text == ".":
                 self.left_number += text
                 return self.ui.label_2.setText(self.left_number)
             if text in ("+", "-", "*", "/"):
                 self.operator_type = text
                 self.ui.label_2.setText("0")
+                if self.left_number[-1] == ".":
+                    self.left_number = self.left_number[:-1]
                 return self.ui.label.setText(self.left_number + self.operator_type)
-            if text in ("="):
-                self.ui.label.setText(self.left_number + text)
-                return self.ui.label_2.setText(self.left_number)
-            if text in ("%"):
-                result = "({0} * {1}) / 100".format(self.left_number, "0")
-                self.ui.label.setText(result + "=")
-                self.left_number = "0"
-                return self.ui.label_2.setText(self.left_number)
+            # 本次运算得出最终结果并结束
+            if text in ("=", "1/x", "sqr", "%"):
+                if text == "1/x":
+                    self.left_number = "1/" + self.left_number
+                if text == "sqr":
+                    self.left_number = self.left_number + " ** 0.5"
+                if text in ("%"):
+                    self.left_number = "({0} * 0) / 100".format(self.left_number)
+                self.ui.label.setText(self.left_number + "=")
+                result = eval(self.left_number)
+                # 本次运算结束
+                self.left_number = ""
+                return self.ui.label_2.setText(str(result))
+            if text == "+/-":
+                result = "-" if self.left_number[0] != "-" else ""
+                self.left_number = result + self.left_number
+                self.ui.label_2.setText(self.left_number)
         if not self.right_number:
             if text.isdigit():
                 self.right_number += text
                 return self.ui.label_2.setText(self.right_number)
-            if text in ("+", "-", "*", "/", "=") and not self.right_number:
+            if text in ("+", "-", "*", "/", "=", "%") and not self.right_number:
                 return
         else:
-            if text.isdigit():
+            if text.isdigit() or text == ".":
                 self.right_number += text
                 return self.ui.label_2.setText(self.right_number)
-            if text in ("+", "-", "*", "/", "="):
-                self.ui.label.setText(self.left_number + self.operator_type + self.right_number + text)
+            if text == "+/-":
+                result = "-" if self.left_number[0] != "-" else ""
+                self.right_number = result + self.right_number
+                return self.ui.label_2.setText(self.right_number)
+            if text in ("+", "-", "*", "/"):
                 self.left_number = str(eval(self.left_number + self.operator_type + self.right_number))
-                self.operator_type = ""
+                self.operator_type = text
+                self.ui.label.setText(self.left_number + self.operator_type)
                 self.right_number = ""
-                return self.ui.label_2.setText(self.left_number)
+                return self.ui.label_2.setText("0")
+            # 本次运算得出最终结果并结束
+            if text in ("=", "1/x", "%"):
+                if self.right_number[-1] == ".":
+                    self.right_number = self.right_number[:-1]
+                if text == "1/x":
+                    self.right_number = "1/" + self.right_number
+                if text == "sqr":
+                    self.right_number = self.left_number + " ** 0.5"
+                if text in ("%"):
+                    self.right_number = "({0} * {1}) / 100".format(self.left_number, self.right_number)
+                self.ui.label.setText(self.left_number + self.operator_type + self.right_number + "=")
+                result = str(eval(self.left_number + self.operator_type + self.right_number))
+                self.ui.label_2.setText(result)
+                self.left_number = ""
+                self.right_number = ""
+                self.operator_type = ""
+                return
         pass
 
 
