@@ -80,7 +80,7 @@ class CalculatorMainWindow():
             return
         # 计算逻辑
         if not self.left_number:
-            if text.isdigit():
+            if text.isdigit() and text != "0":
                 self.ui.label.setText("")
                 self.left_number += text
                 return self.ui.label_2.setText(self.left_number)
@@ -154,4 +154,4 @@ class CalculatorMainWindow():
 
 
 if __name__ == "__main__":
-    calculator = CalculatorMainWindow()
+    CalculatorMainWindow()
