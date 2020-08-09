@@ -24,22 +24,28 @@ class Mysqls(object):
         res = self.cursor.fetchone()
         return res
 
+    # 删除数据
+    def remove(self, sql):
+        try:
+            # 执行SQL语句
+            self.cursor.execute(sql)
+            # 提交修改
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(e)
+            # 发生错误时回滚
+            self.conn.rollback()
+            return False
+
     # 添加  就是添加一次提交多次
-    def get_mode(self, sql, args):
+    def add_one(self, sql, *args):
         self.cursor.execute(sql, args)
         self.conn.commit()
 
     # 添加并且带返回值
-    def get_create(self, sql, args):
+    def update(self, sql, *args):
         self.cursor.execute(sql, args)
-        self.conn.commit()
-        return self.cursor.lastrowid
-        # python插入记录后取得主键id的方法(cursor.lastrowid和conn.insert_id())
-
-    # 批量加入 以元祖的形式传参数   就是添加一次提交一次
-    def mul_mode(self, sql, args):
-        # self.cursor.executemany("insert into user (id,name) values (%s,%s)",[(1,"aaa"),(2,"bbb"),(3,"ccc")])  传参方式
-        self.cursor.executemany(sql, args)
         self.conn.commit()
 
     def get_close(self):

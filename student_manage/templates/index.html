@@ -12,11 +12,15 @@
     <link href="{{ url_for('static', filename='css/templatemo-style.css')}}" rel="stylesheet">
   </head>
   <body>
+    {% block update %}
+    {% endblock %}
+    {% block update_student %}
+    {% endblock %}
     <!-- Left column -->
     <div class="templatemo-flex-row">
       <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
-          <div class="square"></div>
+          <div class="glyphicon glyphicon-tags"></div>
           <h1>学籍管理系统</h1>
         </header>
         <div class="profile-photo-container">
@@ -28,21 +32,62 @@
         </div>
         <nav class="templatemo-left-nav">
           <ul>
-            <li><a href="#" class="active"><i class="fa fa-home fa-fw"></i>学生管理</a></li>
+            <li><a href="{{url_for('student_manage')}}"><i class="fa fa-home fa-fw"></i>学生管理</a></li>
             <li><a href="{{url_for('major_manage')}}"><i class="fa fa-bar-chart fa-fw"></i>专业管理</a></li>
-            <li><a href="{{url_for('login')}}"><i class="fa fa-eject fa-fw"></i>退出</a></li>
           </ul>
         </nav>
       </div>
-      <!-- Main content -->
-      {% block show %}
-      {% endblock %}
+      <div class="templatemo-content col-1 light-gray-bg">
+        <div class="templatemo-top-nav-container">
+          <div class="row">
+            <nav class="templatemo-top-nav col-lg-12 col-md-12">
+              <ul class="text-uppercase">
+                {% if title in ("学生", "添加学生") %}
+                    <li><a href="{{ url_for("student_manage") }}">信息</a></li>
+                    <li><a href="{{ url_for("add_student") }}">添加</a></li>
+                {% endif %}
+                {% if title in ("专业", "添加专业") %}
+                    <li><a href="{{ url_for("major_manage") }}">信息</a></li>
+                    <li><a href="{{ url_for("add_major") }}">添加</a></li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- Main content -->
+        {% block show %}
+        {% endblock %}
+        </div>
     </div>
 
     <!-- JS -->
     <script src="{{ url_for('static', filename='js/jquery-1.11.2.min.js')}}"></script>      <!-- jQuery -->
     <script src="{{ url_for('static', filename='js/jquery-migrate-1.2.1.min.js')}}"></script> <!--  jQuery Migrate Plugin -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/templatemo-script.js')}}"></script>      <!-- Templatemo Script -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script>
+        // 更新左侧菜单的激活状态
+        if ("{{title}}" == "学生"){
+            $("nav.templatemo-left-nav > ul > li:eq(0) > a").attr({"href": "#", "class": "active"})
+            $("ul.text-uppercase > li:eq(0) > a").attr({"href": "#", "class": "active"})
+        }
 
+        if ("{{title}}" == "专业"){
+            $("nav.templatemo-left-nav > ul > li:eq(1) > a").attr({"href": "#", "class": "active"})
+            $("ul.text-uppercase > li:eq(0) > a").attr({"href": "#", "class": "active"})
+        }
+
+        if ("{{title}}" == "添加学生"){
+            $("nav.templatemo-left-nav > ul > li:eq(0) > a").attr({"href": "#", "class": "active"})
+            $("ul.text-uppercase > li:eq(1) > a").attr({"href": "#", "class": "active"})
+        }
+
+        if ("{{title}}" == "添加专业"){
+            $("nav.templatemo-left-nav > ul > li:eq(1) > a").attr({"href": "#", "class": "active"})
+            $("ul.text-uppercase > li:eq(1) > a").attr({"href": "#", "class": "active"})
+        }
+    </script>
+    {% block script %}
+    {% endblock %}
   </body>
 </html>

@@ -1,51 +1,266 @@
 {% extends "index.html" %}
+{% block update %}
+<div id="major_update" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">编辑</h4>
+        </div>
+
+        <div class="modal-body">
+            <form class="form-horizontal" action="{{ url_for("update_major") }}" method="POST">
+                <div class="form-group row">
+                  <label class="col-sm-2 control-label">专业名称</label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="major_name"
+                      name="major_name"
+                      placeholder="专业名称"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 control-label">指导老师</label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="adviser"
+                      name="adviser"
+                      placeholder="指导老师"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 control-label">学院名称</label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="student_name"
+                      name="student_name"
+                      placeholder="学院名称"
+                    />
+                  </div>
+                </div>
+                <div class="form-group hide">
+                    <idlabel class="col-sm-2 control-label">专业id</idlabel>
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="major_id"
+                        name="major_id"
+                        placeholder="学院名称"
+                      />
+                    </div>
+                  </div>
+                <div class="form-group row">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+{% endblock %}
+
+{% block update_student %}
+<div id="student_update" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">编辑</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" action="{{ url_for("update_student") }}" method="POST">
+                <div class="form-group hide">
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="student_id"
+                      />
+                    </div>
+                  </div>
+                <div class="form-group row">
+                  <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="student_name"
+                      placeholder="姓名"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" name="student_sex">
+                        <option value="1">男</option>
+                        <option value="0">女</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 control-label">专业</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" name="student_major">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputBirth" class="col-sm-2 control-label"
+                    >出生日期</label
+                  >
+                  <div class="col-sm-4">
+                    <select class="form-control" name="year">
+                      {% for i in range(1970, 2030) %}
+                      <option>{{ i }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <select class="form-control" name="month">
+                        {% for i in range(1, 12) %}
+                        <option>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <select class="form-control" name="day">
+                        {% for i in range(1, 30) %}
+                        <option>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                  </div>
+                </div>
+              </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+{% endblock %}
+
 {% block show %}
-<div class="templatemo-content col-1 light-gray-bg">
-  <div class="templatemo-top-nav-container">
-    <div class="row">
-      <nav class="templatemo-top-nav col-lg-12 col-md-12">
-        <ul class="text-uppercase">
-          <li><a href="" class="active">Admin panel</a></li>
-          <li><a href="">Dashboard</a></li>
-          <li><a href="">Overview</a></li>
-          <li><a href="login.html">Sign in form</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-  <div class="templatemo-content-container">
-    <div class="templatemo-flex-row flex-content-row">
-      <div class="col-1">
-        <div
-          class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden"
-        >
-          <div class="panel-heading templatemo-position-relative">
-            <h2 class="text-uppercase">User Table</h2>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  {% for f in field %}
-                    <th>{{ f }}</th>
-                  {% endfor %}
-                </tr>
-              </thead>
-              <tbody>
-                {% for item in info %}
-                <tr>
-                    {% for i in item.values() %}
-                    <th>{{ i }}</th>
-                    {% endfor %}
-                </tr>
+<div class="alert alert-danger alert-dismissible hide" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>删除失败!</strong> 专业下没有学生时才允许删除.
+</div>
+<div class="templatemo-content-container">
+  <div class="templatemo-flex-row flex-content-row">
+    <div class="col-1">
+      <div
+        class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden"
+      >
+        <div class="panel-heading templatemo-position-relative">
+          <h2 class="text-uppercase">{{title}}信息</h2>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                {% for f in field %}
+                <th>{{ f }}</th>
                 {% endfor %}
-              </tbody>
-            </table>
-          </div>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in info %}
+              <tr id="{{item['id']}}">
+                {% for i in item.values() %}
+                <td>{{ i }}</td>
+                {% endfor %}
+                <td>
+                  {% if title == "学生" %}
+                  <a id="{{item['id']}}" href="#">编辑</a>
+                  <a id="{{item['id']}}" href="{{ url_for('remove_student', id=item['id']) }}">删除</a>
+                  {% endif %} {% if title == "专业" %}
+                  <a id="{{item['id']}}" href="#">编辑</a>
+                  <a id="{{item['id']}}" href="#">删除</a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-    <!-- Second row ends -->
   </div>
+  <!-- Second row ends -->
 </div>
+{% endblock %} {% block script %}
+<script>
+    // 编辑专业
+    if ("{{title}}" == "专业"){
+        $("a:contains('编辑')").click(function () {
+        $('#major_update').modal();
+        var major_id = $(this).attr('id');
+        $.get("{{ url_for('update_major') }}", {major_id: major_id}, function(data){
+            $("#major_name").val(data["name"])
+            $("#adviser").val(data["instructor"])
+            $("#student_name").val(data["institute"])
+            $("#major_id").val(data["id"])
+        });
+        })
+
+        $("a:contains('删除')").click( function () {
+          var major_id = $(this).attr('id');
+          $.get("{{url_for('remove_major')}}", {major_id: major_id}, function(data){
+            if (!data["succes"]){
+              $("div.alert").removeClass("hide")
+            }else{
+                document.getElementById(major_id).parentNode.removeChild(document.getElementById(major_id));
+            }
+            });
+          })
+    }
+    // 编辑学生
+    if ("{{title}}" == "学生"){
+        $("a:contains('编辑')").click(function () {
+        $('#student_update').modal();
+        var student_id = $(this).attr('id');
+        $.get("{{ url_for('update_student') }}", {major_id: student_id}, function(data){
+            var major = data["major"]
+            var student = data["student"]
+            document.getElementsByName("student_major").innerHTML = '';
+            $("select[name='student_major']").empty()
+            for (let i in major){
+                $("select[name='student_major']").append('<option value="' + major[i]["id"] + '">' + major[i]["name"] + '</option>')
+            }
+            var birth = student["birthday"].split("-");
+            if (birth[1].substr(0, 1) == "0"){
+                birth[1] = birth[1].substr(1, 2)
+            }
+            if (birth[2].substr(0, 1) == "0"){
+                birth[2] = birth[2].substr(1, 2)
+            }
+            console.log(student["birthday"], birth[1])
+            $("select[name='student_major']").attr({"value": student["major_id"]})
+            $("input[name='student_name']").attr({"value": student["name"]})
+            $("input[name='student_id']").attr({"value": student["id"]})
+            $("select[name='student_sex']").attr({"value": student["sex"]})
+            $("select[name='year']").attr({"value": birth[0]})
+            $("select[name='month']").attr({"value": birth[1]})
+            $("select[name='day']").attr({"value": birth[2]})
+        });
+    })
+    }
+</script>
 {% endblock %}
